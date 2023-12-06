@@ -12241,6 +12241,9 @@ function animateElevator () {
                                                                                                                     tiles.setWallAt(tiles.getTileLocation(2, 11), false)
                                                                                                                     timer.after(4000, function () {
                                                                                                                         blockSettings.writeString("name", game.askForString("Username"))
+                                                                                                                        if (blockSettings.readString("name") == "PizzaNinja17") {
+                                                                                                                            blockSettings.writeNumber("god", 1)
+                                                                                                                        }
                                                                                                                         game.reset()
                                                                                                                     })
                                                                                                                 })
@@ -12307,6 +12310,7 @@ scene.onHitWall(SpriteKind.inteaction, function (sprite, location) {
                 Render.moveWithController(2, 3, 1)
                 inDoorConsle = false
                 if (convertToText("" + passcodeArray[0] + passcodeArray[1] + passcodeArray[2] + passcodeArray[3] + passcodeArray[4]) == convertToText(passcodeEntered)) {
+                    blockSettings.clear()
                     game.gameOver(true)
                 } else {
                     passcodeEntered = ""
@@ -21577,6 +21581,13 @@ function createPlayer () {
         `, SpriteKind.HandOverlay)
     Screenoverlay.setFlag(SpriteFlag.RelativeToCamera, true)
     Screenoverlay.z = 2
+    timer.after(1500, function () {
+        if (blockSettings.readNumber("god") == 1) {
+            Render.moveWithController(6, 3, 0)
+            mySprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+            blockSettings.writeNumber("eggsFound", 9)
+        }
+    })
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile31`, function (sprite, location) {
     Render.setViewAngleInDegree(270)
